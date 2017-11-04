@@ -1,0 +1,60 @@
+%p= flash[:notice] if flash[:notice]
+%h2 Hosting Information
+<br>
+%p If you would like to host, please fill out the following information.
+%p Otherwise, click <em>Skip</em> to proceed to use the site.
+
+%h5 Please upload a picture of residence:
+= form_for @user do |f|
+  = f.file_field :house_picture
+  = submit_tag 'Upload'
+
+<br>
+= image_tag "user.png", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+
+<br>
+%h5 Please upload a profile picture:
+= form_for @user do |f|
+  = f.file_field :profile_picture
+  = submit_tag 'Upload'
+
+<br>
+= image_tag "house.jpg", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+<br>
+<br> 
+
+= form_tag update_user_host_path(@user), :method => :patch do
+
+  = label :user, :home_street_address, "Location's Street Address"
+  = text_field :user, :home_street_address
+  <br>
+  = label :user, :home_city, "Location's City"
+  = text_field :user, :home_city
+  <br>
+  = label :user, :home_state, "Location's State"
+  = text_field :user, :home_state
+  <br>
+  = label :user, :home_zip_code, "Location's Zip"
+  = text_field :user, :home_zip_code
+  <br>
+  = label :user, :house_description, "Location's Description"
+  = text_field :user, :house_description
+  <br>
+  = label :user, :price, "Location's Price (per hour)"
+  = text_field :user, :price
+  <br>
+  = label :user, :searchable, "Would you like to host? Checking this box makes your location searchable."
+  = check_box :user, :searchable
+  <br>
+
+  <br>
+  <br>
+  = submit_tag 'Submit'
+
+
+
+<br>
+= link_to "Skip", root_path  
+<br>
+= link_to "Back to Main Page", root_path
+  

@@ -1,0 +1,46 @@
+%h2 Search Results
+
+<br>
+
+%table#results
+  %thead
+    %tr
+      %th Street
+      %th City
+      %th State
+      %th Description
+      %th Price
+      %th Owner
+      %th Picture
+      %th More Info
+  %tbody
+    - if @users != nil
+      - @users.each do |user|
+        %tr
+          %td= user.home_street_address
+          %td= user.home_city
+          %td= user.home_state
+          %td= user.house_description
+          %td= user.price + " p/hour"
+          // user.price + " p/hour"
+          %td= user.first_name + " " + user.last_name
+          - if File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', user.email, 'house_picture.jpg')
+            %td= image_tag "user_images/#{user.email}/house_picture.jpg", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+          - else
+            %td= image_tag "house.jpg", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+          %td= link_to "See More", user_path(user)
+
+<br>
+
+= link_to 'Back to Main Page', root_path
+<br>
+- if logged_in?
+  = link_to "View Profile", user_path(@user)
+  <br>
+  = link_to 'Edit Profile', edit_user_path
+  <br>
+  = link_to 'Log Out', logout_path, method: :delete
+- else
+  = link_to 'Log In', login_path
+  <br>
+  = link_to 'Sign Up', new_user_path

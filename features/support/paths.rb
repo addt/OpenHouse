@@ -10,12 +10,32 @@ module NavigationHelpers
   #
   # step definition in web_steps.rb
   #
-  def path_to(page_name)
+  def path_to(page_name, user=nil)
     case page_name
 
     when /^the home\s?page$/
       '/'
+    
     #when /^the home page$/ then '/'#"/users/#{User.where(username: $1).first.id}"
+
+    when /^the search results page$/
+        return search_path
+
+    when /^the login page$/
+      return login_path
+      
+    when /^the edit page$/
+      return edit_user_path
+
+    when /^the (?:user )?profile page for (?:user )?"(.*)"$/
+        return user_path(User.find_by(email: $1))
+
+    when /^the edit profile page for (?:user )?"(.*)"$/
+        return edit_user_path(User.find_by(email: $1))
+    
+    when /^the edit page$/
+      return edit_user_path
+      
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #

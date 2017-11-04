@@ -26,8 +26,39 @@ section {
 }
 
 h1 {
-  font-size: 2em;
+  font-size: 0.5em;
   margin: 0.67em 0;
+}
+h2 {
+  font-size: 0.5em;
+  margin: 0.67em 0;
+  margin-left: 100px;
+  margin-top: 8em;
+  border-top: 0.5px solid gray
+}
+
+p2 {
+  padding-left: 4.5cm;
+  font-size: 1em;
+}
+p3{
+  padding-left: 19.5cm;
+  font-size: 0.9em;
+}
+p4{
+  padding-left: 22cm;
+  font-size: 1em;
+}
+p5{
+  padding-left: 0.5cm;
+  font-size: 1em;
+}
+p2,
+strong{
+    font-weight: normal;
+}
+ul {
+  padding-left: 6cm;
 }
 
 figcaption,
@@ -544,7 +575,7 @@ h1, .h1 {
 }
 
 h2, .h2 {
-  font-size: 2rem;
+  font-size: 1.5rem;
 }
 
 h3, .h3 {

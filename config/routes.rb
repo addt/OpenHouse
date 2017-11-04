@@ -60,11 +60,17 @@ Rails.application.routes.draw do
   
   
   get '/', to: 'main#show', as: 'root'
+  get '/search', to: 'main#search', as: 'search'
   get    '/login',   to: 'sessions#new'
   post   '/login',   to: 'sessions#create'
   delete '/logout',  to: 'sessions#destroy'
   get 'sessions/new'
   get '/users/edit', to: 'users#edit', as: 'edit_user'
-  get '/users/show', to: 'users#show', as: 'show_user'
-  resources :users, :except => [:edit, :show]
+  # get '/users/show', to: 'users#show', as: 'show_user'
+  get '/users/new_billing', to: 'users#new_billing', as: 'new_user_billing'
+  get '/users/new_host', to: 'users#new_host', as: 'new_user_host'
+  patch '/users/new_billing/:id', to: 'users#update_billing', as: 'update_user_billing'
+  patch '/users/new_host/:id', to: 'users#update_host', as: 'update_user_host'
+  
+  resources :users, :except => [:edit]
 end

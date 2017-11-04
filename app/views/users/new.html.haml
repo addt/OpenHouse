@@ -10,34 +10,16 @@
   = label :user, :password, 'Password'
   = text_field :user, 'password'
   <br>
-  <br>
-  %h4 Enter your billing information below.
-  = label :user, :billing_street_address, 'Billing Street Address'
-  = text_field :user, 'billing_street_address'
-  <br>
-  = label :user, :billing_city, 'Billing City'
-  = text_field :user, 'billing_city'
-  <br>
-  = label :user, :billing_state, 'Billing State'
-  = text_field :user, 'billing_state'
-  <br>
-  = label :user, :billing_zip_code, 'Billing Zip Code'
-  = text_field :user, 'billing_zip_code'
-  <br>
-  = label :user, :credit_card, 'Credit Card Number'
-  = text_field :user, 'credit_card_number'
-  <br>
   = label :user, :first_name, 'First Name'
   = text_field :user, 'first_name'
   <br>
   = label :user, :last_name, 'Last Name'
   = text_field :user, 'last_name'
   <br>
-  = label :user, :expiration_date, 'Expiration Date'
-  = text_field :user, 'expiration_date'
-  <br>
-  = label :user, :cvv, 'CVV'
-  = text_field :user, 'cvv'
-  <br>
+  = label :user, :personal_description, 'Personal Description'
+  = text_field :user, 'personal_description'
   <br>
   = submit_tag 'Submit'
+  
+<br>
+= link_to "Back to Main Page", root_path
