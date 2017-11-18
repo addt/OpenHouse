@@ -1,14 +1,120 @@
-%h1= "USER " + @user.first_name + " " + @user.last_name
-
-%p= "EMAIL: " + @user.email
-
-%p Address:
-%ul 
-    %li 
-        = @user.billing_street_address 
-    %li 
-        = @user.billing_city + ", " + @user.billing_state + ", " + @user.billing_zip_code
-
-%br
-= link_to "Edit Profile", edit_user_path
-= link_to "Home", root_path
+%div.show-box
+  - if @user.house_images != []
+    #myCarousel.carousel.slide{"data-ride" => "carousel"}
+      %ol.carousel-indicators
+        %li.active{"data-slide-to" => "0", "data-target" => "#myCarousel"}
+        - @index = 0
+        - @user.house_images.each do |image|
+          %li{"data-slide-to" => "@index.to_s", "data-target" => "#myCarousel"}
+          - @index += 1
+      .carousel-inner
+        - @index = 0
+        - if @user.house_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.house_picture)
+          .item.active
+            = image_tag "user_images/#{@user.email}/#{@user.house_picture}", size: "200x600", hspace: '50', vspace: '50'
+          - active = true
+          - @index += 1
+        - else
+          - active = false
+        - @user.house_images.each do |image|
+          - if active == false
+            .item.active
+              = image_tag "user_images/#{@user.email}/#{image}", size: "200x600", hspace: '50', vspace: '50', id: "more_image_#{@index}"
+            - active = true
+          - else 
+            .item
+              = image_tag "user_images/#{@user.email}/#{image}", size: "200x600", hspace: '50', vspace: '50', id: "more_image_#{@index}"
+          - @index += 1
+          
+      %a.left.carousel-control{"data-slide" => "prev", :href => "#myCarousel"}
+        %span.glyphicon.glyphicon-chevron-left
+        %span.sr-only Previous
+      %a.right.carousel-control{"data-slide" => "next", :href => "#myCarousel"}
+        %span.glyphicon.glyphicon-chevron-right
+        %span.sr-only Next
+  
+  %br
+  %h2.center Profile Information
+  %h4.center Profile Photo
+  %br
+  - if @user.profile_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.profile_picture)
+    = image_tag "user_images/#{@user.email}/#{@user.profile_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :profile_picture
+  - else
+    = image_tag "user.png", height: '150', weight: '20',hspace: '400', vspace: '10', id: :profile_picture
+  %h4.center House Photo
+  %br
+  - if @user.house_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.house_picture)
+    = image_tag "user_images/#{@user.email}/#{@user.house_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+  - else
+    = image_tag "house.jpg", height: '150', weight: '20',hspace: '400', vspace: '10', id: :house_picture
+  %br
+  
+  %p2
+    %strong First Name:
+    = +(@user.first_name || "")
+  %br
+  %p2
+    %strong Last Name: 
+    = +(@user.last_name || "")
+  %br
+  %p2
+    %strong Personal Description: 
+    = +(@user.personal_description || "")
+  %br
+  
+  - if @user == @current_user
+    %p2
+    %strong Email: 
+    = +(@user.email || "")
+    %br
+    %p2 
+      %strong Billing Address Information:
+    %ul 
+      %li First Name:
+      = +(@user.billing_first_name || "")
+      %li Last Name:
+      = +(@user.billing_last_name || "")
+      %li Street:
+      = +(@user.billing_street_address || "")
+      %li City:
+      = +(@user.billing_city || "")
+      %li State:
+      = +(@user.billing_state || "")
+      %li Zip Code:
+      = +(@user.billing_zip_code || "")
+    %br
+    %p2 
+      %strong Credit Card Information
+    
+    %ul 
+      %li Number:
+      = +(@user.credit_card_number || "")
+      %li Expiration Date:
+      = +(@user.expiration_date || "")
+      %li CVV:
+      = +(@user.cvv || "")
+    
+  %p2 
+    %strong Hosting Information:
+  %ul 
+    %li Price:
+    = +(@user.price || "")
+    %li Times Available:
+    = +(range_to_ampm(@user.available_time) || "")
+    %li Location:
+    = "[INSERT MAP OF THIS LOCATION]"
+    %li Amenities:
+    %table
+      %tbody
+        - @user.amenity_list.attributes.each do |amenity|
+          - unless amenity.first.include? 'id'
+            - if @user.amenity_list[amenity[0]]
+              %tr
+                %td= image_tag "amenity_icons/#{amenity[0]}", height: '20', weight: '20',hspace: '10', vspace: '10'
+                %td= amenity[0]
+  // Insert map of the place's location
+  // %br
+  // = image_tag(google_map_static_helper(center: @user.billing_street_address),hspace: '150', vspace: '10')
+  
+  %p5
+  = link_to "Back to Main Page", root_path, style: 'color:#79b8d1;font-weight: bold;', class: 'css_class', align: "right"

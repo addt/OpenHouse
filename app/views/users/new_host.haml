@@ -1,0 +1,98 @@
+%div.hosting-box
+  %p= flash[:notice] if flash[:notice]
+  %h2.center Hosting Information
+  <br>
+  
+  %p If you would like to host, please fill out the following information.
+  %p Otherwise, click <em>Skip</em> to proceed to use the site.
+  
+  
+  <br>
+  %h5 Please upload a profile picture:
+  = form_for @user do |f|
+    = f.file_field :profile_picture
+    = submit_tag 'Upload'
+
+
+  <br>
+  - if @user.profile_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.profile_picture)
+    = image_tag "user_images/#{@user.email}/#{@user.profile_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :profile_picture
+  - else
+    = image_tag "user.png", height: '150', weight: '20',hspace: '400', vspace: '10', id: :profile_picture
+
+
+  <br>
+  %h5 Please upload a picture of residence:
+  = form_for @user do |f|
+    = f.file_field :house_picture
+    = submit_tag 'Upload'
+
+
+  <br>
+  - if @user.house_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.house_picture)
+    = image_tag "user_images/#{@user.email}/#{@user.house_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+  - else
+    = image_tag "house.jpg", height: '150', weight: '20',hspace: '400', vspace: '10', id: :house_picture
+  
+  <br>
+
+  %h5 Upload more pictures of your residence!
+  = form_tag user_path(@user), method: :put, multipart: true do
+    = file_field :user, 'more_picture', accept: 'image/*'
+    = submit_tag 'Upload', id: :upload_house_picture
+
+
+  <br>
+  - if @user.house_images
+    - @user.house_images.each do |image|
+      = image_tag "user_images/#{@user.email}/#{image}", height: '150', weight: '20',hspace: '150', vspace: '10'
+  <br>
+
+  = form_tag update_user_host_path(@user), :method => :patch do
+  
+    = label :user, :home_street_address, "Location's Street Address"
+    = text_field :user, :home_street_address
+    <br>
+    = label :user, :home_city, "Location's City"
+    = text_field :user, :home_city
+    <br>
+    = label :user, :home_state, "Location's State"
+    = text_field :user, :home_state
+    <br>
+    = label :user, :home_zip_code, "Location's Zip"
+    = text_field :user, :home_zip_code
+    <br>
+    = label :user, :house_description, "Location's Description"
+    = text_field :user, :house_description
+    <br>
+    = label :user, :price, "Location's Price (per hour)"
+    = text_field :user, :price
+    <br>
+    = label :user, :available_time, "Times Available"
+    %input{type: "time", name:"available_time_start", value: "00:00"}
+    to
+    %input{type: "time", name:"available_time_end", value: "00:00"}
+    <br>
+    = label :user, :searchable, "Would you like to host? Checking this box makes your location searchable."
+    = check_box :user, :searchable
+    <br>
+    %table
+      %tbody
+        - @user.amenity_list.attributes.each do |amenity|
+          - unless amenity.first.include? 'id'
+            %tr
+              %td= check_box :amenity_list, amenity[0], checked: @user.amenity_list[amenity[0]]
+              %td= image_tag "amenity_icons/#{amenity[0]}", height: '20', weight: '20',hspace: '10', vspace: '10'
+              %td= amenity[0]
+    <br>
+    <br>
+    <br>
+    = submit_tag 'Submit'
+  
+  
+  
+  <br>
+  = link_to "Skip", root_path  
+  <br>
+  = link_to "Back to Main Page", root_path
+    

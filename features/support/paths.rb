@@ -10,12 +10,30 @@ module NavigationHelpers
   #
   # step definition in web_steps.rb
   #
-  def path_to(page_name)
+  def path_to(page_name, user = nil)
     case page_name
 
     when /^the home\s?page$/
       '/'
-    #when /^the home page$/ then '/'#"/users/#{User.where(username: $1).first.id}"
+
+    # when /^the home page$/ then
+    # '/'#"/users/#{User.where(username: $1).first.id}"
+
+    when /^the search results page$/
+      search_path
+
+    when /^the login page$/
+      login_path
+
+    when /^the edit page$/
+      edit_user_path
+
+    when /^the (?:user )?profile page for (?:user )?"(.*)"$/
+      user_path(User.find_by(email: $1))
+
+    when /^the edit profile page for (?:user )?"(.*)"$/
+      edit_user_path(User.find_by(email: $1))
+
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
     #
@@ -29,7 +47,7 @@ module NavigationHelpers
         self.send(path_components.push('path').join('_').to_sym)
       rescue NoMethodError, ArgumentError
         raise "Can't find mapping from \"#{page_name}\" to a path.\n" +
-          "Now, go and add a mapping in #{__FILE__}"
+              "Now, go and add a mapping in #{__FILE__}"
       end
     end
   end

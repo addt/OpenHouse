@@ -21,3 +21,11 @@ routes.txt
 
 # Ignore byebug histories
 .byebug_history
+
+# Ignore user files
+public/assets/
+app/assets/images/user_images/*
+!app/assets/images/user_images/.gitkeep
+
+# Ignore local coverage results
+coverage/
