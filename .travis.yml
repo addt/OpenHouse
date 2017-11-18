@@ -1,6 +1,7 @@
 language: ruby
-global:
- - CC_TEST_REPORTER_ID=70314b1de21e5cf66a3d396a6f482c4c53891f768e4585852d40b4f780bbf105
+env:
+  global:
+    - CC_TEST_REPORTER_ID=3c2cf99e5f66bf29988cca0da7d9284986cbd8ea89050069b9995cafc0b08b3e
 rvm:
  - 2.3.5
  - jruby-9.0.5.0 

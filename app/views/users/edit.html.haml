@@ -1,40 +1,144 @@
-%p= flash[:notice] if flash[:notice]
-%h1 Create New User
-
-= form_tag user_path(@user), :method => :patch do
-
-  = label :user, :email, 'E-mail Address'
-  = text_field :user, 'email', :value=>@user.email
-
-  = label :user, :billing_street_address, 'Billing Street Address'
-  = text_field :user, 'billing_street_address', :value=>@user.billing_street_address
-
-  = label :user, :billing_city, 'Billing City'
-  = text_field :user, 'billing_city', :value=>@user.billing_city
-
-  = label :user, :billing_state, 'Billing State'
-  = text_field :user, 'billing_state', :value=>@user.billing_state
-
-  = label :user, :billing_zip_code, 'Billing Zip Code'
-  = text_field :user, 'billing_zip_code', :value=>@user.billing_zip_code
-
-  = label :user, :first_name, 'First Name'
-  = text_field :user, 'first_name', :value=>@user.first_name
-
-  = label :user, :last_name, 'Last Name'
-  = text_field :user, 'last_name', :value=>@user.last_name
-
-  = label :user, :credit_card, 'Credit Card'
-  = text_field :user, 'credit_card_number', :value=>@user.credit_card_number
+%html
+  %body
+    %div.hosting-box
+      %p= flash[:notice] if flash[:notice]
+      %h1.center Edit Profile Information
+      <br>
+      %h4.center Edit any of the fields below.
+      
+      %h5 Upload or change your profile picture:
+      -#= form_for @user do |f|
+      -#  = f.file_field :profile_picture, accept: "image/*"
+      -#  = submit_tag 'Upload', id: :upload_profile_picture
+      = form_tag user_path(@user), method: :put, multipart: true do
+        = file_field :user, 'profile_picture', accept: 'image/*'
+        = submit_tag 'Upload', id: :upload_profile_picture
   
-  = label :user, :expiration_date, 'Expiration Date'
-  = text_field :user, 'expiration_date', :value=>@user.expiration_date
+      <br>
+      - if @user.profile_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.profile_picture)
+        = image_tag "user_images/#{@user.email}/#{@user.profile_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :profile_picture
   
-  = label :user, :cvv, 'CVV'
-  = text_field :user, 'cvv', :value=>@user.cvv
-
-  = submit_tag 'Submit'
+      <br>
+      
+      %h5 Upload or change the picture of your residence:
+      -#= form_for @user do |f|
+      -#  = f.file_field :user, :house_picture, accept: "image/*"
+      -#  = submit_tag 'Upload', id: :upload_house_picture
+      = form_tag user_path(@user), method: :put, multipart: true do
+        = file_field :user, 'house_picture', accept: 'image/*'
+        = submit_tag 'Upload', id: :upload_house_picture
   
-= button_to 'Delete Profile', user_path(@user), :method => :delete, :confirm => "Are you sure?"
-= link_to "Back to main page", root_path
-
+      <br>
+      - if @user.house_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', @user.email, @user.house_picture)
+        = image_tag "user_images/#{@user.email}/#{@user.house_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+  
+      <br>
+      %h5 Upload more pictures of your residence!
+      -#= form_for @user do |f|
+      -#  = f.file_field :user, :house_picture, accept: "image/*"
+      -#  = submit_tag 'Upload', id: :upload_house_picture
+      = form_tag user_path(@user), method: :put, multipart: true do
+        = file_field :user, 'more_picture', accept: 'image/*'
+        = submit_tag 'Upload', id: :upload_more_picture
+  
+      <br>
+      - if @user.house_images
+        - @user.house_images.each do |image|
+          = image_tag "user_images/#{@user.email}/#{image}", height: '150', weight: '20',hspace: '150', vspace: '10'
+      <br>
+      
+      = form_tag user_path(@user), :method => :patch do
+        <br>
+        %h4 Personal Information
+        = label :user, :email, 'E-mail Address'
+        = @user.email
+        <br>
+        = label :user, :first_name, 'First Name'
+        = text_field :user, 'first_name', :value=>@user.first_name
+        <br>
+        = label :user, :last_name, 'Last Name'
+        = text_field :user, 'last_name', :value=>@user.last_name
+        <br>
+        = label :user, :personal_description, 'Personal Description'
+        = text_field :user, 'personal_description', :value=>@user.personal_description
+        <br>
+        <br>
+        %h4 Billing Information
+        = label :user, :billing_first_name, 'First Name'
+        = text_field :user, 'billing_first_name', :value=>@user.billing_first_name
+        <br>
+        = label :user, :billing_last_name, 'Last Name'
+        = text_field :user, 'billing_last_name', :value=>@user.billing_last_name
+        <br>
+        = label :user, :billing_street_address, 'Street Address'
+        = text_field :user, 'billing_street_address', :value=>@user.billing_street_address
+        <br>
+        = label :user, :billing_city, 'City'
+        = text_field :user, 'billing_city', :value=>@user.billing_city
+        <br>
+        = label :user, :billing_state, 'State'
+        = text_field :user, 'billing_state', :value=>@user.billing_state
+        <br>
+        = label :user, :billing_zip_code, 'Zip Code'
+        = text_field :user, 'billing_zip_code', :value=>@user.billing_zip_code
+        <br>
+        = label :user, :credit_card_number, 'Credit Card Number'
+        = text_field :user, 'credit_card_number', :value=>@user.credit_card_number
+        <br>  
+        = label :user, :expiration_date, 'Expiration Date'
+        = text_field :user, 'expiration_date', :value=>@user.expiration_date
+        <br>  
+        = label :user, :cvv, 'CVV'
+        = text_field :user, 'cvv', :value=>@user.cvv
+        <br>
+        <br>
+        %h4 Hosting Information
+        = label :user, :home_street_address, "Street Address"
+        = text_field :user, :home_street_address, :value=>@user.home_street_address
+        <br>
+        = label :user, :home_city, "City"
+        = text_field :user, :home_city, :value=>@user.home_city
+        <br>
+        = label :user, :home_state, "State"
+        = text_field :user, :home_state, :value=>@user.home_state
+        <br>
+        = label :user, :home_zip_code, "Zip"
+        = text_field :user, :home_zip_code, :value=>@user.home_zip_code
+        <br>
+        = label :user, :house_description, "Description"
+        = text_field :user, :house_description, :value=>@user.house_description
+        <br>
+        = label :user, :title, "Title (i.e. \"Cozy flat\")"
+        = text_field :user, :title, value: @user.title
+        <br>
+        = label :user, :capacity, "Capacity"
+        = text_field :user, :capacity, value: @user.capacity
+        people
+        <br>
+        = label :user, :price, "Price (per day)"
+        = text_field :user, :price, :value=>@user.price
+        <br>
+        = label :user, :available_time, "Times Available"
+        %input{type: "time", name: "user[available_time_start]", value: @user.available_time_start}
+        to
+        %input{type: "time", name: "user[available_time_end]", value: @user.available_time_end}
+        <br>
+        = label :user, :searchable, "Would you like your location to be searchable?"
+        = check_box :user, :searchable, :value=>@user.searchable
+        <br> 
+        %table
+          %tbody
+            - @user.amenity_list.attributes.each do |amenity|
+              - unless amenity.first.include? 'id'
+                %tr
+                  %td= check_box :amenity_list, amenity[0], checked: @user.amenity_list[amenity[0]]
+                  %td{align: :center}= image_tag "amenity_icons/#{amenity[0]}", height: '20', weight: '20',hspace: '10', vspace: '10'
+                  %td= amenity[0]
+        <br>
+        <br>
+        = submit_tag 'Save Changes'
+   
+      <br>
+      = button_to 'Delete Profile', user_path(@user), :method => :delete, :confirm => "Are you sure?"
+      <br>
+      = link_to "Back to Main Page", root_path

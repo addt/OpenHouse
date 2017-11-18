@@ -21,3 +21,21 @@ routes.txt
 
 # Ignore byebug histories
 .byebug_history
+
+# Ignore user files
+public/assets/
+app/assets/images/user_images/*
+!app/assets/images/user_images/.gitkeep
+
+# Ignore local coverage results
+coverage/
+
+# Ignore that one folder that kept on being there
+openhouse-1/
+
+# Don't ignore the seed data images
+!app/assets/images/user_images/andrew.robles3000868@gmail.com/
+!app/assets/images/user_images/angello.lopez138917@gmail.com/
+!app/assets/images/user_images/aravind.kumar298640@gmail.com/
+!app/assets/images/user_images/hunter.johnson222001@gmail.com/
+!app/assets/images/user_images/kyle.peyton220268@gmail.com/

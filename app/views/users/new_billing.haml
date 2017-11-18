@@ -1,0 +1,47 @@
+%div.signup-box
+  %p.center= flash[:notice] if flash[:notice]
+  %h2.center Billing Information
+  <br>
+  
+  %div{:class => 'row'}
+    %div{:class => 'col-md-6 col-md-offset-3'}
+      %p If you would like to make a reservation or host, please fill out the following information. Don't worry—you will only be charged if you make a reservation. Our site is free.
+      %p Otherwise, click <em>Skip</em> to proceed to use the site.
+      
+      = form_tag update_user_billing_path(@user), :method => :patch do
+      
+        = label :user, :billing_first_name, 'First Name'
+        = text_field :user, 'billing_first_name'
+        <br>
+        = label :user, :billing_last_name, 'Last Name'
+        = text_field :user, 'billing_last_name'
+        <br>
+        = label :user, :billing_street_address, 'Street Address'
+        = text_field :user, 'billing_street_address'
+        <br>
+        = label :user, :billing_city, 'City'
+        = text_field :user, 'billing_city'
+        <br>
+        = label :user, :billing_state, 'State'
+        = text_field :user, 'billing_state'
+        <br>
+        = label :user, :billing_zip_code, 'Zip Code'
+        = text_field :user, 'billing_zip_code'
+        <br>
+        = label :user, :credit_card, 'Credit Card Number'
+        = text_field :user, 'credit_card_number'
+        <br>
+        = label :user, :expiration_date, 'Expiration Date'
+        = text_field :user, 'expiration_date'
+        <br>
+        = label :user, :cvv, 'CVV'
+        = text_field :user, 'cvv'
+        <br>
+        <br>
+        = submit_tag 'Submit'
+      
+      <br>
+      = link_to "Skip", root_path  
+      <br>
+      = link_to "Back to Main Page", root_path
+        

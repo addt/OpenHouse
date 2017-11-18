@@ -1,19 +1,89 @@
-%h1 OpenHouse Homepage
-%p= flash[:notice] if flash[:notice]
+// %link{:href => "vendor/bootstrap/css/bootstrap.min.css", :rel => "stylesheet"}
+%link{:href => "css/homepage.css", :rel => "stylesheet"}/
+%body{:style => 'overflow-x: hidden;'}
+  %header.intro-header
+    .container
+      .intro-message
+        = image_tag "/assets/openhousewhite.png", height: '90', weight: '0', hspace: '0', vspace: '0'
+        %h3 Work at shared home offices
+        %h2 Find unique coworking spaces near you,
+        %h2 anywhere, anytime.
 
-// <br>
-// %h3 Search for available homes near you
-// = form_tag search_path do
-//   = text_field :search, 'query'
-//   = submit_tag 'Search'
+        <br>
+        = form_tag search_path, :method => :get do
+          = text_field :location, 'city', :placeholder=>"Try Oakland...",
+          style: 'color:#3F3F3F;background: none;width: 320px;border: 1px solid #545454;-webkit-text-fill-color: #3f3f3f;height: 30px;font-size: 1.2em;'
+          = submit_tag 'Search', class: "search-button"
 
-// <br>
-<br>
+  %p= flash[:notice] if flash[:notice]
+  / Page Content
+  
+  .container
+    .row
+      .clearfix{:style => 'padding-top: 50px;padding-bottom:50px;'}
+        %h1.center Come and work at unique homes with other freelancers
+  %section.content-section-a
+    .container
+      .row
+        .col-md-6
+          = image_tag "/assets/homepage2.jpg", height: '300', weight: '100', hspace: '0', vspace: '20'
+        .col-md-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Keep you inspired
+          %p.lead
+            Find nearby workspaces with character 
+            %br>
+            From one hour to one day
+            %br>
+            New places for new ideas
 
-- if logged_in?
-  = link_to "View Profile", show_user_path
-  = link_to 'Edit Profile', edit_user_path
-  <br>
-  = link_to 'Log Out', logout_path, method: :delete
-- else
-  = link_to 'Log In', login_path
+    / /.container
+  %section.content-section-b
+    .container
+      .row
+        .col-lg-5.ml-auto
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Keep you productive
+          %p.lead
+            All the amenities you need
+            %br>
+            Wifi, Printer, Coffee,
+            %br>
+            Kitchen, Backyard.
+        .col-lg-5.mr-auto
+          = image_tag "/assets/homepage3.jpg", height: '300', weight: '100', hspace: '100', vspace: '20'
+    / /.container
+    
+  %section.content-section-a
+    .container
+      .row
+        .col-md-6
+          = image_tag "/assets/collage.png", height: '300', weight: '100', hspace: '0', vspace: '20'
+        .col-md-6
+          %hr.section-heading-spacer/
+          .clearfix
+          %h2.section-heading
+            Cross new minds
+          %p.lead
+            Pool with other freelancers
+            %br>
+            From your neighborhood
+            %br>
+            Help the local community
+            %br>
+            %br>
+            %h2.section-heading{:style => 'letter-spacing: 20px;font-family: serif;font-weight: 560px'}
+              THRIVE
+        
+
+    
+  / Footer
+  %footer
+    .container
+      %p.copyright.text-muted.small Copyright © Open House 2017. All Rights Reserved
+
+    

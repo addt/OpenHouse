@@ -1,0 +1,63 @@
+%h3{:class => 'header-search'} Search Results
+
+%div{:id => 'map'}
+
+:javascript
+  lat = 0
+  lng = 0
+  locs_nearby = []
+  
+  //Check ruby api and attempt to pull valid coordinates
+  curr_loc_lat = '#{@curr_loc_lat}';
+  curr_loc_lng = '#{@curr_loc_lng}';
+  curr_locs_nearby = JSON.parse('#{@nearby_locations.to_json}');
+  //window.alert(curr_locs_nearby);
+  
+  if (curr_loc_lat !== "" && curr_loc_lng !== "") {
+    lat = parseFloat(curr_loc_lat);
+    lng = parseFloat(curr_loc_lng);
+    locs_nearby = curr_locs_nearby;
+  }
+  
+  handler = Gmaps.build('Google');
+  handler.buildMap({ provider: {}, internal: {id: 'map'}}, function(){
+  
+  // Add initial marker to center selected location
+  center = handler.addMarker({
+    lat: lat,
+    lng: lng
+  });
+  
+  nearby_markers = [];
+  for (var i = 0; i < locs_nearby.length; i++) {
+    nearby_markers.push({
+      lat: parseFloat(locs_nearby[i][0]),
+      lng: parseFloat(locs_nearby[i][1])
+    });
+  }
+  if (nearby_markers.length > 0) {
+    markers = handler.addMarkers(nearby_markers);
+    handler.bounds.extendWith(markers);
+    handler.bounds.extendWith(center);
+    handler.map.centerOn(center);
+    handler.fitMapToBounds();
+  }
+  });
+
+<br>
+
+%div#listings-box
+  - if @users != nil
+    - @users.each do |user|
+      %a.listing-link{:value => user.home_street_address, :href => user_path(user), :id =>"link_#{user.home_street_address}"}
+        %div.listing
+          - if user.house_picture and File.exists? Rails.root.join('app', 'assets', 'images', 'user_images', user.email, user.house_picture)
+            %td= image_tag "user_images/#{user.email}/#{user.house_picture}", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+          - else
+            %td= image_tag "house.jpg", height: '150', weight: '20',hspace: '150', vspace: '10', id: :house_picture
+          %div.listing-details
+            %h5.listing-location.listing-details-text= user.home_city.to_s + ", " + user.home_state.to_s
+            %h4.listing-address.listing-details-text= user.home_street_address
+            %h4.listing-price.listing-details-text= "$" + user.price.to_s + " per day"
+            %h4.listing-availability.listing-details-text= "Available: " + user.available_time
+        

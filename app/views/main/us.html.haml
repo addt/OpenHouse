@@ -1,0 +1,39 @@
+%link{:href => "css/homepage.css", :rel => "stylesheet"}/
+%body{:style => 'overflow-x: hidden;'}
+%h1{:style => 'padding-left: 40px'} Our Leadership Team
+%br
+.row{:style => 'padding-left: 40px'}
+  .col-sm-4.my-4
+    .card
+      = image_tag "/assets/christelle.png", height: '300', weight: '60', hspace: '0', vspace: '0'
+      .card-body{:style => 'font-size:16px;'}
+        %br
+        %h4.card-title{:style => 'color:#2FB2C2;font-size:22px;'} Christelle Rohaut
+        %h4.card-title{:style => 'color:#19538c;font-size:19px;'} Executive
+        %br
+        %p.card-text Before founding OpenHouse, Christelle graduated from Ecole polytechnique and UC Berkeley. Passionate by innovation in cities, she is deeply committed to promote the circular economy and help develop happier livelihoods.
+      .card-footer
+  .col-sm-4.my-4
+    .card
+      = image_tag "/assets/romain.png", height: '300', weight: '60', hspace: '0', vspace: '0'
+      .card-body{:style => 'font-size:16px;'}
+        %br
+        %h4.card-title{:style => 'color:#2FB2C2;font-size:22px;'} Romain Lopez
+        %h4.card-title{:style => 'color:#19538c;font-size:19px;'} Technology
+        %br
+        %p.card-text Romain is a PhD student in Computer Sciences at UC Berkeley. Trained in artificial intelligence and statistics, he is in charge of data analytics, designing the smart contracts and the technological strategy at OpenHouse.
+      .card-footer
+  .col-sm-4.my-4
+    .card
+      = image_tag "/assets/azat.png", height: '300', weight: '60', hspace: '0', vspace: '0'
+      .card-body{:style => 'font-size:16px;'}
+        %br
+        %h4.card-title{:style => 'color:#2FB2C2;font-size:22px;'} Azat Sembayev
+        %h4.card-title{:style => 'color:#19538c;font-size:19px;'} Business
+        %br
+        %p.card-text After several years at McKinsey and KPMG, Azat is now a MBA student at the Haas School of Business. He is excited to bring innovation to the ever growing population of independent workers. 
+      .card-footer
+/ /.row
+%br
+%br
+= link_to "Back to Main Page", root_path, style: 'color:#79b8d1;font-weight: bold;padding-left: 40px;', class: 'css_class', align: "right"
